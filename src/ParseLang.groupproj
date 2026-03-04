@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{C64A0A90-76C8-4B78-86CA-7627E5B25E07}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="..\testbed\Testbed.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\cli\PLC.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Testbed">
+        <MSBuild Projects="..\testbed\Testbed.dproj"/>
+    </Target>
+    <Target Name="Testbed:Clean">
+        <MSBuild Projects="..\testbed\Testbed.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Testbed:Make">
+        <MSBuild Projects="..\testbed\Testbed.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PLC">
+        <MSBuild Projects="..\cli\PLC.dproj"/>
+    </Target>
+    <Target Name="PLC:Clean">
+        <MSBuild Projects="..\cli\PLC.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PLC:Make">
+        <MSBuild Projects="..\cli\PLC.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Testbed;PLC"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Testbed:Clean;PLC:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Testbed:Make;PLC:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>
