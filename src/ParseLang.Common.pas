@@ -37,6 +37,15 @@ type
     OnSetVIFilename:    TProc<string>;
     OnSetVICompanyName: TProc<string>;
     OnSetVICopyright:   TProc<string>;
+    OnAddSourceFile:     TProc<string>;
+    OnAddIncludePath:    TProc<string>;
+    OnAddLibraryPath:    TProc<string>;
+    OnAddLinkLibrary:    TProc<string>;
+    OnSetDefine:         TProc<string, string>;
+    OnHasDefine:         TFunc<string, Boolean>;
+    OnUnsetDefine:       TProc<string>;
+    OnHasUndefine:       TFunc<string, Boolean>;
+    OnAddCopyDLL:        TProc<string>;
   end;
 
 implementation

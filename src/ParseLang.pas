@@ -351,6 +351,63 @@ begin
     begin
       FVICopyright := AValue;
     end;
+
+  Result.OnAddSourceFile :=
+    procedure(AValue: string)
+    begin
+      FCustomParse.AddSourceFile(AValue);
+    end;
+
+  Result.OnAddIncludePath :=
+    procedure(AValue: string)
+    begin
+      FCustomParse.AddIncludePath(AValue);
+    end;
+
+  Result.OnAddLibraryPath :=
+    procedure(AValue: string)
+    begin
+      FCustomParse.AddLibraryPath(AValue);
+    end;
+
+  Result.OnAddLinkLibrary :=
+    procedure(AValue: string)
+    begin
+      FCustomParse.AddLinkLibrary(AValue);
+    end;
+
+  Result.OnSetDefine :=
+    procedure(AName: string; AValue: string)
+    begin
+      if AValue = '' then
+        FCustomParse.SetDefine(AName)
+      else
+        FCustomParse.SetDefine(AName, AValue);
+    end;
+
+  Result.OnHasDefine :=
+    function(AName: string): Boolean
+    begin
+      Result := FCustomParse.HasDefine(AName);
+    end;
+
+  Result.OnUnsetDefine :=
+    procedure(AValue: string)
+    begin
+      FCustomParse.UnsetDefine(AValue);
+    end;
+
+  Result.OnHasUndefine :=
+    function(AName: string): Boolean
+    begin
+      Result := FCustomParse.HasUndefine(AName);
+    end;
+
+  Result.OnAddCopyDLL :=
+    procedure(AValue: string)
+    begin
+      FCustomParse.AddCopyDLL(AValue);
+    end;
 end;
 
 // =========================================================================
@@ -546,7 +603,7 @@ begin
     if TParseUtils.ResourceExist('EXE_MANIFEST') then
     begin
       try
-        Status('Applying manifest: %s', [TParseUtils.NormalizePath(AExePath)]);
+        Status('Applying manifest: %s', [TParseUtils.NormalizePath(TPath.GetFullPath(AExePath))]);
         if not TParseUtils.AddResManifestFromResource('EXE_MANIFEST', AExePath) then
           FCustomParse.GetErrors().Add(esWarning, 'W980',
             'Failed to add manifest to executable');

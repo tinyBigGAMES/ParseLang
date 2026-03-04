@@ -99,24 +99,57 @@ begin
   end;
 end;
 
-procedure RunTestbed();
+procedure Test02();
 var
-  LPlatform: TParseTargetPlatform;
-  LLevel: TParseOptimizeLevel;
-  LNum: Integer;
+  LParseLang: TParseLang;
+begin
+  LParseLang := TParseLang.Create();
+  try
+    LParseLang.SetLangFile('..\..\..\CPascal\repo\bin\CPascal.parse');
+    LParseLang.SetSourceFile('..\..\..\CPascal\repo\bin\tests\test_program_hello.cp');
+    LParseLang.SetOutputPath('..\..\..\CPascal\repo\bin\output');
+    LParseLang.SetLineDirectives(True);
+
+    (*
+    LParseLang.SetAddVersionInfo(True);
+    LParseLang.SetExeIcon('');
+    LParseLang.SetVersionInfoMajor(1);
+    LParseLang.SetVersionInfoMinor(0);
+    LParseLang.SetVersionInfoPatch(0);
+    LParseLang.SetVersionInfoProductName('Hello');
+    LParseLang.SetVersionInfoDescription('MyLang Hello World');
+    LParseLang.SetVersionInfoFilename('hello.exe');
+    LParseLang.SetVersionInfoCompanyName('ParseLang');
+    LParseLang.SetVersionInfoCopyright('Copyright 2025 ParseLang');
+    *)
+
+    LParseLang.SetStatusCallback(
+      procedure(const AText: string; const AUserData: Pointer)
+      begin
+        TParseUtils.PrintLn(AText);
+      end
+    );
+
+    LParseLang.SetOutputCallback(
+      procedure(const ALine: string; const AUserData: Pointer)
+      begin
+        TParseUtils.Print(ALine);
+      end
+    );
+
+    LParseLang.Compile(True, True);
+    ShowErrors(LParseLang);
+
+  finally
+    LParseLang.Free();
+  end;
+end;
+
+procedure RunTestbed();
 begin
   try
-    { Language }
-    LPlatform := tpWin64;
-    //LPlatform := tpLinux64;
-
-    LLevel := olDebug;
-    //LLevel := olReleaseSmall;
-
-    LNum := 1;
-
-
-    Test01();
+    //Test01();
+    Test02();
 
   except
     on E: Exception do

@@ -1672,6 +1672,53 @@ begin
     if (Length(AArgs) >= 1) and Assigned(FPipeline.OnSetVICopyright) then
       FPipeline.OnSetVICopyright(ResolveStr(AArgs[0]));
   end
+  else if AName = 'addSourceFile' then
+  begin
+    if (Length(AArgs) >= 1) and Assigned(FPipeline.OnAddSourceFile) then
+      FPipeline.OnAddSourceFile(ResolveStr(AArgs[0]));
+  end
+  else if AName = 'addIncludePath' then
+  begin
+    if (Length(AArgs) >= 1) and Assigned(FPipeline.OnAddIncludePath) then
+      FPipeline.OnAddIncludePath(ResolveStr(AArgs[0]));
+  end
+  else if AName = 'addLibraryPath' then
+  begin
+    if (Length(AArgs) >= 1) and Assigned(FPipeline.OnAddLibraryPath) then
+      FPipeline.OnAddLibraryPath(ResolveStr(AArgs[0]));
+  end
+  else if AName = 'addLinkLibrary' then
+  begin
+    if (Length(AArgs) >= 1) and Assigned(FPipeline.OnAddLinkLibrary) then
+      FPipeline.OnAddLinkLibrary(ResolveStr(AArgs[0]));
+  end
+  else if AName = 'setDefine' then
+  begin
+    if (Length(AArgs) >= 2) and Assigned(FPipeline.OnSetDefine) then
+      FPipeline.OnSetDefine(ResolveStr(AArgs[0]), ResolveStr(AArgs[1]))
+    else if (Length(AArgs) >= 1) and Assigned(FPipeline.OnSetDefine) then
+      FPipeline.OnSetDefine(ResolveStr(AArgs[0]), '');
+  end
+  else if AName = 'hasDefine' then
+  begin
+    if (Length(AArgs) >= 1) and Assigned(FPipeline.OnHasDefine) then
+      AResult := MakeBool(FPipeline.OnHasDefine(ResolveStr(AArgs[0])));
+  end
+  else if AName = 'unsetDefine' then
+  begin
+    if (Length(AArgs) >= 1) and Assigned(FPipeline.OnUnsetDefine) then
+      FPipeline.OnUnsetDefine(ResolveStr(AArgs[0]));
+  end
+  else if AName = 'hasUndefine' then
+  begin
+    if (Length(AArgs) >= 1) and Assigned(FPipeline.OnHasUndefine) then
+      AResult := MakeBool(FPipeline.OnHasUndefine(ResolveStr(AArgs[0])));
+  end
+  else if AName = 'addCopyDLL' then
+  begin
+    if (Length(AArgs) >= 1) and Assigned(FPipeline.OnAddCopyDLL) then
+      FPipeline.OnAddCopyDLL(ResolveStr(AArgs[0]));
+  end
   else
     Result := False;
 end;
